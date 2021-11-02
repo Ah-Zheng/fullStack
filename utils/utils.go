@@ -1,1 +1,1 @@
-package myUtils
+package utils

@@ -2,12 +2,13 @@
   <div id="app">
     <input type="text" v-model="text" @keydown.enter="wsHandler">
     <button @click="wsHandler" >click connect</button>
-    <p
+    <img :src="img" alt="">
+    <!-- <p
       v-for="(item, index) in list"
       :key="index"
     >
       {{ item }}
-    </p>
+    </p> -->
   </div>
 </template>
 
@@ -19,6 +20,7 @@ export default {
     return {
       text: '',
       list: [],
+      img: '',
       ws: null
     };
   },
@@ -36,7 +38,8 @@ export default {
     this.ws.onmessage = (msg) => {
       console.log('msg :>> ', msg);
       console.log('msg.data :>> ', msg.data);
-      this.list.push(msg.data)
+      this.img = msg.data;
+      // this.list.push(msg.data)
     }
     this.ws.onclose = () => {
       console.log('close connect');

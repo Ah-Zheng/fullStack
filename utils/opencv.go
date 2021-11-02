@@ -1,8 +1,9 @@
-package myUtils
+package utils
 
 import (
 	"encoding/base64"
 	"log"
+	"time"
 
 	"gocv.io/x/gocv"
 )
@@ -17,6 +18,7 @@ func CaptureImg() string {
 	defer webcam.Close()
 
 	img := gocv.NewMat()
+	time.Sleep(time.Millisecond * 100)
 	webcam.Read(&img)
 
 	data, err := gocv.IMEncode(".png", img)
@@ -25,9 +27,5 @@ func CaptureImg() string {
 		log.Fatal(err)
 	}
 
-	n := base64.StdEncoding.EncodedLen(data.Len())
-	dst := make([]byte, n)
-	base64.StdEncoding.Encode(dst, data.GetBytes())
-
-	return "data:image/png;base64," + string(dst)
+	return "data:image/png;base64," + base64.StdEncoding.EncodeToString(data.GetBytes())
 }

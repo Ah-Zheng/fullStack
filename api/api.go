@@ -1,6 +1,7 @@
 package api
 
 import (
+	"full-stack/utils"
 	"log"
 	"net/http"
 
@@ -10,7 +11,7 @@ import (
 )
 
 func SetupApi() *gin.Engine {
-	r := gin.Default()
+	r := gin.New()
 	r.Use(static.Serve("/", static.LocalFile("./public/", false)))
 
 	api := r.Group("/api")
@@ -52,8 +53,8 @@ func socketHandler(c *gin.Context) {
 
 		log.Printf("Received: %s", msg)
 
-		sendText := string(msg) + " from backend"
-		err = conn.WriteMessage(msgType, []byte(sendText))
+		// sendText := string(msg) + " from backend"
+		err = conn.WriteMessage(msgType, []byte(utils.CaptureImg()))
 
 		if err != nil {
 			log.Println("Error during message writing: ", err)
